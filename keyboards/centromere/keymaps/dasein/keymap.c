@@ -4,7 +4,8 @@ enum centromere_layers
 {
 	_STD,
 	_NUM,
-	_FN
+	_FN,
+    _MOVE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -28,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_ENT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LCTL, MO(_FN),  KC_SPC,     KC_SPC,MO(_NUM),  KC_RALT \
+                                          KC_LCTL, KC_SPC, MO(_MOVE),  MO(_NUM), MO(_FN), KC_RALT \
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT,  KC_ENT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, MO(_FN),  KC_SPC,     KC_ENT,MO(_NUM), KC_RALT \
+                                          KC_LCTL, KC_SPC, MO(_MOVE),  MO(_NUM), MO(_FN), KC_RALT \
                                       //`--------------------------'  `--------------------------'
     ),
 
@@ -64,7 +65,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,   KC_Q, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,\
 
-                                          KC_LCTL, MO(_FN),  KC_SPC,     KC_ENT,MO(_NUM), KC_RALT \
+                                          KC_LCTL, KC_SPC, MO(_MOVE),  MO(_NUM), MO(_FN), KC_RALT \
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_MOVE] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+       KC_ESC, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, KC_UP, XXXXXXX, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LGUI, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LEFT, KC_DOWN, KC_RIGHT, XXXXXXX, XXXXXXX,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
+
+                                          KC_LCTL, KC_SPC, MO(_MOVE),  MO(_NUM), MO(_FN), KC_RALT \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -78,6 +91,9 @@ void matrix_scan_user(void) {
     		set_led_off;
     		break;
         case _FN:
+            set_led_blue;
+            break;
+        case _MOVE:
             set_led_blue;
             break;
         case _NUM:
